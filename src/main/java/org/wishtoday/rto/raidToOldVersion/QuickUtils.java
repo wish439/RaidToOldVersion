@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public class QuickUtils {
-    public static final NamespacedKey ITEMUUID = new NamespacedKey("quickutils", "ItemUUID");
+    public static final NamespacedKey ITEMUUID = new NamespacedKey(RaidToOldVersion.getInstance(), "item_uuid");
 
     public static boolean isSupportItem(ItemStack item) {
         return isShulkerBox(item) || isCraftingTable(item) || isEnderChest(item);
@@ -175,8 +175,9 @@ public class QuickUtils {
         return UUID.randomUUID().toString();
     }
     public static int findShulkerFromUUID(String uuid, Inventory inv) {
-        int i = 0;
+        int i = -1;
         int size = inv.getSize();
+        System.out.println(size);
         for (int i1 = 0; i1 < size; i1++) {
             ItemStack stack = inv.getItem(i1);
             if (isShulkerBox(stack)) {
@@ -201,10 +202,29 @@ public class QuickUtils {
         if (container.has(ITEMUUID, PersistentDataType.STRING)) {
             uuid = container.get(ITEMUUID, PersistentDataType.STRING);
         }else {
-            String uuid1 = getRandomUUID();
-            container.set(ITEMUUID, PersistentDataType.STRING, uuid1);
-            uuid = uuid1;
+            uuid = createUUID(stack);;
         }
         return uuid;
+    }
+    @Nullable
+    public static String createUUID(ItemStack itemStack) {
+        if (itemStack == null) return null;
+        ItemMeta meta = itemStack.getItemMeta();
+        if (meta == null) return null;
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        String uuid = getRandomUUID();
+        container.set(ITEMUUID, PersistentDataType.STRING, uuid);
+        itemStack.setItemMeta(meta);
+        return uuid;
+    }
+    public static void removeUUID(ItemStack stack) {
+        if (stack == null) return;
+        ItemMeta meta = stack.getItemMeta();
+        if (meta == null) return;
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        if (container.has(ITEMUUID, PersistentDataType.STRING)) {
+            container.remove(ITEMUUID);
+        }
+        stack.setItemMeta(meta);
     }
 }

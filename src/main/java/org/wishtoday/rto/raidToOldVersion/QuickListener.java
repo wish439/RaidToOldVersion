@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.UUID;
 import java.util.HashMap;
@@ -52,8 +53,9 @@ public class QuickListener implements Listener {
         event.setCancelled(true);
 
         if (QuickUtils.isShulkerBox(itemInHand)) {
+            String s = QuickUtils.getItemUUIDOrCreate(itemInHand);
             Inventory shulkerInv = QuickUtils.getShulkerInventory(itemInHand, shulkerInvKey);
-            openedShulkers.put(player.getUniqueId(), new OpenedShulker(-1, itemInHand, shulkerInv));
+            openedShulkers.put(player.getUniqueId(), new OpenedShulker(s, itemInHand, shulkerInv));
             player.openInventory(shulkerInv);
             player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1.0F, 1.0F);
         }
@@ -92,9 +94,10 @@ public class QuickListener implements Listener {
         }
         if (QuickUtils.isShulkerBox(clickedItem)) {
             int slot = event.getSlot();
-
+            String s = QuickUtils.getItemUUIDOrCreate(clickedItem);
+            System.out.println(s);
             Inventory shulkerInv = QuickUtils.getShulkerInventory(clickedItem, shulkerInvKey);
-            openedShulkers.put(player.getUniqueId(), new OpenedShulker(slot, clickedItem, shulkerInv));
+            openedShulkers.put(player.getUniqueId(), new OpenedShulker(s, clickedItem, shulkerInv));
             Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openInventory(shulkerInv));
             //player.openInventory(shulkerInv);
             player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1.0F, 1.0F);
@@ -109,7 +112,7 @@ public class QuickListener implements Listener {
             QuickUtils.openPlayerEnderChest(player,plugin);
         }
     }
-    @EventHandler
+    /*@EventHandler
     public void onPlaceItem(InventoryClickEvent event) {
         InventoryAction action = event.getAction();
         if (!QuickUtils.isPlaceAction(action)) return;
@@ -119,7 +122,7 @@ public class QuickListener implements Listener {
         System.out.println(shulker.getSlot());
         shulker.setSlot(event.getSlot());
         System.out.println(openedShulkers.get(player.getUniqueId()).getSlot());
-    }
+    }*/
 
 
     @EventHandler
@@ -132,9 +135,15 @@ public class QuickListener implements Listener {
         }
         Inventory closedInv = event.getInventory();
         if (closedInv.equals(os.shulkerInventory)) {
-            ItemStack updatedShulker = QuickUtils.updateShulkerItem(os.shulkerItem, closedInv, shulkerInvKey);
-            if (os.slot >= 0) {
-                player.getInventory().setItem(os.slot, updatedShulker);
+            PlayerInventory playerInventory = player.getInventory();
+            int slot = QuickUtils.findShulkerFromUUID(os.uuid, playerInventory);
+            System.out.println(slot);
+            ItemStack item = playerInventory.getItem(slot);
+            ItemStack updatedShulker = QuickUtils.updateShulkerItem(item, closedInv, shulkerInvKey);
+            if (slot >= 0) {
+                player.getInventory().setItem(slot, updatedShulker);
+                ItemStack stack = player.getInventory().getItem(slot);
+                QuickUtils.removeUUID(stack);
             } else {
                 ItemStack mainHand = player.getInventory().getItemInMainHand();
                 if (mainHand.getType() != Material.AIR && QuickUtils.isShulkerBox(mainHand)) {
@@ -154,22 +163,22 @@ public class QuickListener implements Listener {
     }
 
     private static class OpenedShulker {
-        private int slot;
+        private String uuid;
         private ItemStack shulkerItem;
         private Inventory shulkerInventory;
 
-        public OpenedShulker(int slot, ItemStack shulkerItem, Inventory shulkerInventory) {
-            this.slot = slot;
+        public OpenedShulker(String uuid, ItemStack shulkerItem, Inventory shulkerInventory) {
+            this.uuid = uuid;
             this.shulkerItem = shulkerItem;
             this.shulkerInventory = shulkerInventory;
         }
 
-        public int getSlot() {
-            return slot;
+        public String getUuid() {
+            return uuid;
         }
 
-        public void setSlot(int slot) {
-            this.slot = slot;
+        public void setSlot(String uuid) {
+            this.uuid = uuid;
         }
 
         public ItemStack getShulkerItem() {
