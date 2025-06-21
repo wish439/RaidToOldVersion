@@ -2,7 +2,7 @@ name: RaidToOldVersion
 version: '5.0'
 main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
 api-version: '1.21'
-author: wishtoday
+authors: [wishtoday,Tahoma34]
 commands:
   tickattack:
     description: TickAttack Command

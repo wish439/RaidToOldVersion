@@ -13,6 +13,7 @@ public class PlayerAttacks {
     public PlayerAttacks(int tick, UUID uuid) {
         this.tick = tick;
         this.uuid = uuid;
+        //passTick = tick;
         passTick = tick - 1;
     }
 
@@ -44,6 +45,7 @@ public class PlayerAttacks {
     public void checkPassTick(Consumer<Player> r) {
         if (passTick <= 0) {
             passTick = tick - 1;
+            //passTick = tick;
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) return;
             r.accept(player);
