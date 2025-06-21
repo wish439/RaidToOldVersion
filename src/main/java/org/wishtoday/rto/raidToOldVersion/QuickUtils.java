@@ -7,7 +7,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -166,11 +165,7 @@ public class QuickUtils {
 
         return meta.displayName();
     }
-    public static boolean isPlaceAction(InventoryAction action) {
-        return action.equals(InventoryAction.PLACE_ALL)
-                || action.equals(InventoryAction.PLACE_ONE)
-                || action.equals(InventoryAction.PLACE_SOME);
-    }
+
     public static String getRandomUUID(){
         return UUID.randomUUID().toString();
     }

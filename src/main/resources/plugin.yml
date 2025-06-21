@@ -1,0 +1,10 @@
+name: RaidToOldVersion
+version: '3.0'
+main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
+api-version: '1.21'
+author: wishtoday
+commands:
+  tickattack:
+    description: TickAttack Command
+    aliases: [tk,tickak]
+    usage: /<command> <数字> -> 设置多少tick攻击,/<command> -> 取消

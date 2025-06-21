@@ -1,10 +1,9 @@
-package org.wishtoday.rto.raidToOldVersion;
+package org.wishtoday.rto.raidToOldVersion.Event;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -15,6 +14,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.wishtoday.rto.raidToOldVersion.QuickUtils;
+import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 
 import java.util.UUID;
 import java.util.HashMap;
@@ -69,7 +70,6 @@ public class QuickListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryRight(InventoryClickEvent event) {
-        System.out.println(event.getAction().name());
         if (event.getClickedInventory() == null
                 || event.getClickedInventory().getType() != InventoryType.PLAYER) {
             return;

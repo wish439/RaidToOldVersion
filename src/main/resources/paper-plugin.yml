@@ -1,4 +1,0 @@
-name: RaidToOldVersion
-version: '2.0'
-main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
-api-version: '1.21'

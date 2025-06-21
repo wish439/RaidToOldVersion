@@ -1,36 +1,38 @@
 package org.wishtoday.rto.raidToOldVersion;
 
-import com.destroystokyo.paper.event.entity.ExperienceOrbMergeEvent;
 import com.destroystokyo.paper.event.server.ServerTickStartEvent;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Raid;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
+import org.wishtoday.rto.raidToOldVersion.Command.TickAttack;
+import org.wishtoday.rto.raidToOldVersion.Event.AttackListener;
+import org.wishtoday.rto.raidToOldVersion.Event.QuickListener;
+import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
 
-import java.util.List;
+import java.util.*;
 
 public final class RaidToOldVersion extends JavaPlugin implements Listener {
     private static RaidToOldVersion instance;
     private NamespacedKey shulkerInvKey;
+    public static List<PlayerAttacks> PlayerAndTicks = new ArrayList<>();
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        getCommand("tickattack").setExecutor(new TickAttack());
         instance = this;
-
         shulkerInvKey = new NamespacedKey(this, "shulker_inventory");
 
         getServer().getPluginManager().registerEvents(new QuickListener(this, shulkerInvKey), this);
+        getServer().getPluginManager().registerEvents(new AttackListener(), this);
         getServer().getPluginManager().registerEvents(this,this);
     }
     public static RaidToOldVersion getInstance() {
