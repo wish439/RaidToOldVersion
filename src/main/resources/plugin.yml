@@ -1,5 +1,5 @@
 name: RaidToOldVersion
-version: '3.0'
+version: '5.0'
 main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
 api-version: '1.21'
 author: wishtoday

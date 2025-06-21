@@ -14,7 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.wishtoday.rto.raidToOldVersion.QuickUtils;
+import org.wishtoday.rto.raidToOldVersion.Util.QuickUtils;
 import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 
 import java.util.UUID;
@@ -89,13 +89,12 @@ public class QuickListener implements Listener {
         }
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
-        if (player.getOpenInventory().getTopInventory().getType().equals(InventoryType.CHEST)) {
+        if (player.getOpenInventory().getTopInventory().getType().equals(InventoryType.SHULKER_BOX)) {
             player.closeInventory();
         }
         if (QuickUtils.isShulkerBox(clickedItem)) {
             int slot = event.getSlot();
             String s = QuickUtils.getItemUUIDOrCreate(clickedItem);
-            System.out.println(s);
             Inventory shulkerInv = QuickUtils.getShulkerInventory(clickedItem, shulkerInvKey);
             openedShulkers.put(player.getUniqueId(), new OpenedShulker(s, clickedItem, shulkerInv));
             Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openInventory(shulkerInv));
@@ -112,17 +111,7 @@ public class QuickListener implements Listener {
             QuickUtils.openPlayerEnderChest(player,plugin);
         }
     }
-    /*@EventHandler
-    public void onPlaceItem(InventoryClickEvent event) {
-        InventoryAction action = event.getAction();
-        if (!QuickUtils.isPlaceAction(action)) return;
-        HumanEntity player = event.getWhoClicked();
-        OpenedShulker shulker = openedShulkers.get(player.getUniqueId());
-        if (shulker == null) return;
-        System.out.println(shulker.getSlot());
-        shulker.setSlot(event.getSlot());
-        System.out.println(openedShulkers.get(player.getUniqueId()).getSlot());
-    }*/
+
 
 
     @EventHandler
@@ -137,7 +126,6 @@ public class QuickListener implements Listener {
         if (closedInv.equals(os.shulkerInventory)) {
             PlayerInventory playerInventory = player.getInventory();
             int slot = QuickUtils.findShulkerFromUUID(os.uuid, playerInventory);
-            System.out.println(slot);
             ItemStack item = playerInventory.getItem(slot);
             ItemStack updatedShulker = QuickUtils.updateShulkerItem(item, closedInv, shulkerInvKey);
             if (slot >= 0) {

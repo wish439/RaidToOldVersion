@@ -1,4 +1,4 @@
-package org.wishtoday.rto.raidToOldVersion;
+package org.wishtoday.rto.raidToOldVersion.Util;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -17,6 +17,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 
 import java.util.UUID;
 
@@ -44,16 +45,16 @@ public class QuickUtils {
 
     public static Inventory getShulkerInventory(ItemStack item, NamespacedKey key) {
 
-        if (item == null) return Bukkit.createInventory(null, 27,Component.text("shulker"));
+        if (item == null) return Bukkit.createInventory(null, InventoryType.SHULKER_BOX,Component.text("shulker"));
         Component name = QuickUtils.getShulkerName(item);
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) return Bukkit.createInventory(null, 27,name);
+        if (meta == null) return Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
 
         if (meta instanceof BlockStateMeta blockStateMeta) {
             BlockState blockState = blockStateMeta.getBlockState();
 
             if (blockState instanceof ShulkerBox shulkerBox) {
-                Inventory shulkerInventory = Bukkit.createInventory(null, 27,name);
+                Inventory shulkerInventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
 
                 ItemStack[] contents = shulkerBox.getInventory().getContents();
                 shulkerInventory.setContents(contents);
@@ -67,13 +68,13 @@ public class QuickUtils {
             String serialized = container.get(key, PersistentDataType.STRING);
             Inventory loadedInv = deserializeInventory(serialized);
             if (loadedInv != null) {
-                Inventory namedInventory = Bukkit.createInventory(null, 27,name);
+                Inventory namedInventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
                 namedInventory.setContents(loadedInv.getContents());
                 return namedInventory;
             }
         }
 
-        return Bukkit.createInventory(null, 27,name);
+        return Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
     }
 
     public static void saveShulkerInventory(ItemStack item, Inventory inv, NamespacedKey key) {
@@ -108,7 +109,7 @@ public class QuickUtils {
         if (player.getOpenInventory().getTopInventory().getType() == InventoryType.ENDER_CHEST) {
             player.closeInventory();
         }
-        if (player.getOpenInventory().getTopInventory().getType() == InventoryType.CHEST) {
+        if (player.getOpenInventory().getTopInventory().getType() == InventoryType.SHULKER_BOX) {
             player.closeInventory();
         }
         plugin.getServer().getScheduler().runTask(plugin, () -> {
@@ -145,7 +146,7 @@ public class QuickUtils {
             YamlConfiguration config = new YamlConfiguration();
             config.loadFromString(data);
             int size = config.getInt("size", 27);
-            Inventory inv = Bukkit.createInventory(null, size);
+            Inventory inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX);
             for (int i = 0; i < size; i++) {
                 if (config.contains("item" + i)) {
                     ItemStack item = config.getItemStack("item" + i);
