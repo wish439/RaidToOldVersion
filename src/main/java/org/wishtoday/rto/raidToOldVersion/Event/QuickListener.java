@@ -87,8 +87,15 @@ public class QuickListener implements Listener {
         if (!QuickUtils.isSupportItem(clickedItem)) {
             return;
         }
-        event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
+        OpenedShulker openedShulker = openedShulkers.get(player.getUniqueId());
+        String uuidOrNull = QuickUtils.getUUIDOrNull(clickedItem);
+        if (openedShulker != null
+                && uuidOrNull != null
+                && uuidOrNull.equals(openedShulker.uuid)) {
+            return;
+        }
+        event.setCancelled(true);
         if (player.getOpenInventory().getTopInventory().getType().equals(InventoryType.SHULKER_BOX)) {
             player.closeInventory();
         }

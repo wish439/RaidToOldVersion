@@ -1,5 +1,5 @@
 name: RaidToOldVersion
-version: '5.0'
+version: ${project.mod_verision}
 main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
 api-version: '1.21'
 authors: [wishtoday,Tahoma34]

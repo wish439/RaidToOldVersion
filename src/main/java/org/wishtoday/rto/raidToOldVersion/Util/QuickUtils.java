@@ -27,16 +27,19 @@ public class QuickUtils {
     public static boolean isSupportItem(ItemStack item) {
         return isShulkerBox(item) || isCraftingTable(item) || isEnderChest(item);
     }
+
     public static boolean isShulkerBox(ItemStack item) {
         if (item == null) return false;
         Material type = item.getType();
         return type.name().endsWith("SHULKER_BOX");
     }
+
     public static boolean isCraftingTable(ItemStack item) {
         if (item == null) return false;
         Material type = item.getType();
         return type == Material.CRAFTING_TABLE && item.getAmount() == 1;
     }
+
     public static boolean isEnderChest(ItemStack item) {
         if (item == null) return false;
         Material type = item.getType();
@@ -45,16 +48,16 @@ public class QuickUtils {
 
     public static Inventory getShulkerInventory(ItemStack item, NamespacedKey key) {
 
-        if (item == null) return Bukkit.createInventory(null, InventoryType.SHULKER_BOX,Component.text("shulker"));
-        Component name = QuickUtils.getShulkerName(item);
+        if (item == null) return Bukkit.createInventory(null, InventoryType.SHULKER_BOX, Component.text("shulker"));
+        Component name = QuickUtils.getItemName(item);
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) return Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
+        if (meta == null) return Bukkit.createInventory(null, InventoryType.SHULKER_BOX, name);
 
         if (meta instanceof BlockStateMeta blockStateMeta) {
             BlockState blockState = blockStateMeta.getBlockState();
 
             if (blockState instanceof ShulkerBox shulkerBox) {
-                Inventory shulkerInventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
+                Inventory shulkerInventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, name);
 
                 ItemStack[] contents = shulkerBox.getInventory().getContents();
                 shulkerInventory.setContents(contents);
@@ -68,13 +71,13 @@ public class QuickUtils {
             String serialized = container.get(key, PersistentDataType.STRING);
             Inventory loadedInv = deserializeInventory(serialized);
             if (loadedInv != null) {
-                Inventory namedInventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
+                Inventory namedInventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, name);
                 namedInventory.setContents(loadedInv.getContents());
                 return namedInventory;
             }
         }
 
-        return Bukkit.createInventory(null, InventoryType.SHULKER_BOX,name);
+        return Bukkit.createInventory(null, InventoryType.SHULKER_BOX, name);
     }
 
     public static void saveShulkerInventory(ItemStack item, Inventory inv, NamespacedKey key) {
@@ -102,10 +105,12 @@ public class QuickUtils {
         container.set(key, PersistentDataType.STRING, serialized);
         item.setItemMeta(meta);
     }
+
     public static void saveEnderChestInventory(Inventory inv, Player player) {
         player.getEnderChest().setContents(inv.getContents());
     }
-    public static void openPlayerEnderChest(Player player,RaidToOldVersion plugin) {
+
+    public static void openPlayerEnderChest(Player player, RaidToOldVersion plugin) {
         if (player.getOpenInventory().getTopInventory().getType() == InventoryType.ENDER_CHEST) {
             player.closeInventory();
         }
@@ -113,7 +118,7 @@ public class QuickUtils {
             player.closeInventory();
         }
         plugin.getServer().getScheduler().runTask(plugin, () -> {
-           player.openInventory(player.getEnderChest());
+            player.openInventory(player.getEnderChest());
         });
     }
 
@@ -159,7 +164,8 @@ public class QuickUtils {
             return null;
         }
     }
-    public static Component getShulkerName(@NotNull ItemStack it) {
+
+    public static Component getItemName(@NotNull ItemStack it) {
         final ItemMeta meta = it.getItemMeta();
 
         if (meta == null || meta.displayName() == null) return Component.text("潜影盒");
@@ -167,9 +173,10 @@ public class QuickUtils {
         return meta.displayName();
     }
 
-    public static String getRandomUUID(){
+    public static String getRandomUUID() {
         return UUID.randomUUID().toString();
     }
+
     public static int findShulkerFromUUID(String uuid, Inventory inv) {
         int i = -1;
         int size = inv.getSize();
@@ -188,6 +195,7 @@ public class QuickUtils {
         }
         return i;
     }
+
     @Nullable
     public static String getItemUUIDOrCreate(ItemStack stack) {
         String uuid;
@@ -197,11 +205,12 @@ public class QuickUtils {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         if (container.has(ITEMUUID, PersistentDataType.STRING)) {
             uuid = container.get(ITEMUUID, PersistentDataType.STRING);
-        }else {
-            uuid = createUUID(stack);;
+        } else {
+            uuid = createUUID(stack);
         }
         return uuid;
     }
+
     @Nullable
     public static String createUUID(ItemStack itemStack) {
         if (itemStack == null) return null;
@@ -213,6 +222,7 @@ public class QuickUtils {
         itemStack.setItemMeta(meta);
         return uuid;
     }
+
     public static void removeUUID(ItemStack stack) {
         if (stack == null) return;
         ItemMeta meta = stack.getItemMeta();
@@ -222,5 +232,24 @@ public class QuickUtils {
             container.remove(ITEMUUID);
         }
         stack.setItemMeta(meta);
+    }
+
+    public static boolean hasUUID(ItemStack stack) {
+        if (stack == null) return false;
+        ItemMeta meta = stack.getItemMeta();
+        if (meta == null) return false;
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        return container.has(ITEMUUID, PersistentDataType.STRING);
+    }
+    public static String getUUIDOrDefault(ItemStack stack, String defaultValue) {
+        if (stack == null) return defaultValue;
+        ItemMeta meta = stack.getItemMeta();
+        if (meta == null) return defaultValue;
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        if (!hasUUID(stack)) return defaultValue;
+        return container.get(ITEMUUID, PersistentDataType.STRING);
+    }
+    public static String getUUIDOrNull(ItemStack stack) {
+        return getUUIDOrDefault(stack, null);
     }
 }
