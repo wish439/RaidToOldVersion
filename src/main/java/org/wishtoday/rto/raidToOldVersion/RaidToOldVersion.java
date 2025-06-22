@@ -5,23 +5,15 @@ import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.wishtoday.rto.raidToOldVersion.Command.TickAttack;
 import org.wishtoday.rto.raidToOldVersion.Event.RegisterEvent;
-import org.wishtoday.rto.raidToOldVersion.Event.impl.AttackListener;
-import org.wishtoday.rto.raidToOldVersion.Event.impl.QuickListener;
-import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
-
-import java.util.*;
 
 public final class RaidToOldVersion extends JavaPlugin implements Listener {
     private static RaidToOldVersion instance;
     private NamespacedKey shulkerInvKey;
-    public static List<PlayerAttacks> PlayerAndTicks = new ArrayList<>();
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        getCommand("tickattack").setExecutor(new TickAttack());
         instance = this;
         shulkerInvKey = new NamespacedKey(this, "shulker_inventory");
 
