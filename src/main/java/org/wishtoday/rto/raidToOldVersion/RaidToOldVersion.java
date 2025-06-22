@@ -5,6 +5,7 @@ import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.wishtoday.rto.raidToOldVersion.Command.SetKeepInventory;
 import org.wishtoday.rto.raidToOldVersion.Command.TickAttack;
 import org.wishtoday.rto.raidToOldVersion.Event.RegisterEvent;
 import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
@@ -20,6 +21,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
     public void onEnable() {
         // Plugin startup logic
         getCommand("tickattack").setExecutor(new TickAttack());
+        getCommand("setkeepinventory").setExecutor(new SetKeepInventory());
         instance = this;
         shulkerInvKey = new NamespacedKey(this, "shulker_inventory");
 
