@@ -7,8 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.rto.raidToOldVersion.Command.TickAttack;
 import org.wishtoday.rto.raidToOldVersion.Event.RegisterEvent;
-import org.wishtoday.rto.raidToOldVersion.Event.impl.AttackListener;
-import org.wishtoday.rto.raidToOldVersion.Event.impl.QuickListener;
 import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
 
 import java.util.*;
