@@ -1,4 +1,4 @@
-package org.wishtoday.rto.raidToOldVersion.Event;
+package org.wishtoday.rto.raidToOldVersion.Event.impl;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

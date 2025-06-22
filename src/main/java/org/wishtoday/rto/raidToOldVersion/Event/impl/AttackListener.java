@@ -1,7 +1,6 @@
-package org.wishtoday.rto.raidToOldVersion.Event;
+package org.wishtoday.rto.raidToOldVersion.Event.impl;
 
 import com.destroystokyo.paper.event.server.ServerTickEndEvent;
-import com.destroystokyo.paper.event.server.ServerTickStartEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
