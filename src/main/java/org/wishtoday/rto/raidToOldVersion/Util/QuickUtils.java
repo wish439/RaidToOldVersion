@@ -17,6 +17,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.wishtoday.rto.raidToOldVersion.Config.Config;
 import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 
 import java.util.UUID;
@@ -27,11 +28,19 @@ public class QuickUtils {
     public static boolean isSupportItem(ItemStack item) {
         return isShulkerBox(item) || isCraftingTable(item) || isEnderChest(item);
     }
+    public static boolean isSupportItemAndTrueConfig(ItemStack item) {
+        return isShulkerAndTrueConfig(item)
+                || isCraftingTableAndTrueConfig(item)
+                || isEnderChestAndTrueConfig(item);
+    }
 
     public static boolean isShulkerBox(ItemStack item) {
         if (item == null) return false;
         Material type = item.getType();
         return type.name().endsWith("SHULKER_BOX");
+    }
+    public static boolean isShulkerAndTrueConfig(ItemStack item) {
+        return isShulkerBox(item) && Config.isCan_open_shulker();
     }
 
     public static boolean isCraftingTable(ItemStack item) {
@@ -39,11 +48,17 @@ public class QuickUtils {
         Material type = item.getType();
         return type == Material.CRAFTING_TABLE && item.getAmount() == 1;
     }
+    public static boolean isCraftingTableAndTrueConfig(ItemStack item) {
+        return isCraftingTable(item) && Config.isCan_open_workbench();
+    }
 
     public static boolean isEnderChest(ItemStack item) {
         if (item == null) return false;
         Material type = item.getType();
         return type == Material.ENDER_CHEST && item.getAmount() == 1;
+    }
+    public static boolean isEnderChestAndTrueConfig(ItemStack item) {
+        return isEnderChest(item) && Config.isCan_open_enderchest();
     }
 
     public static Inventory getShulkerInventory(ItemStack item, NamespacedKey key) {
@@ -180,7 +195,6 @@ public class QuickUtils {
     public static int findShulkerFromUUID(String uuid, Inventory inv) {
         int i = -1;
         int size = inv.getSize();
-        System.out.println(size);
         for (int i1 = 0; i1 < size; i1++) {
             ItemStack stack = inv.getItem(i1);
             if (isShulkerBox(stack)) {

@@ -1,5 +1,5 @@
 name: RaidToOldVersion
-version: ${project.mod_verision}
+version: "${version}"
 main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
 api-version: '1.21'
 authors: [wishtoday,Tahoma34]
@@ -11,3 +11,10 @@ commands:
   setkeepinventory:
     description: setkeepinventory
     usage: /setkeepinventory -> 可开启关闭
+  rules:
+    description: 显示服务器规则
+    usage: /rules
+  rto:
+    description: raidToOldVersion Mod Main Command
+    usage: /rto reload -> 刷新配置文件
+    permission: op

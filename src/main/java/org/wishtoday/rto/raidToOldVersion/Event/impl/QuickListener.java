@@ -14,6 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.wishtoday.rto.raidToOldVersion.Config.Config;
 import org.wishtoday.rto.raidToOldVersion.Util.QuickUtils;
 import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 
@@ -35,6 +36,7 @@ public class QuickListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (Config.isNotQuickShulker()) return;
         if (!plugin.isHandInteractEnabled()) {
             return;
         }
@@ -53,23 +55,28 @@ public class QuickListener implements Listener {
         }
         event.setCancelled(true);
 
-        if (QuickUtils.isShulkerBox(itemInHand)) {
-            String s = QuickUtils.getItemUUIDOrCreate(itemInHand);
-            Inventory shulkerInv = QuickUtils.getShulkerInventory(itemInHand, shulkerInvKey);
-            openedShulkers.put(player.getUniqueId(), new OpenedShulker(s, itemInHand, shulkerInv));
-            player.openInventory(shulkerInv);
-            player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1.0F, 1.0F);
-        }
-        if (QuickUtils.isCraftingTable(itemInHand)) {
-            Bukkit.getServer().getScheduler().runTask(plugin,() -> player.openWorkbench(null,true));
-        }
+        tryOpenShulker2(itemInHand, player);
+        tryOpenWorkbench(itemInHand, player);
+        tryOpenEnderChest(itemInHand, player);
+    }
+
+    private void tryOpenEnderChest(ItemStack itemInHand, Player player) {
+        if (!Config.isCan_open_enderchest()) return;
         if (QuickUtils.isEnderChest(itemInHand)) {
             QuickUtils.openPlayerEnderChest(player,plugin);
         }
     }
 
+    private void tryOpenWorkbench(ItemStack itemInHand, Player player) {
+        if (!Config.isCan_open_workbench()) return;
+        if (QuickUtils.isCraftingTable(itemInHand)) {
+            Bukkit.getServer().getScheduler().runTask(plugin,() -> player.openWorkbench(null,true));
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryRight(InventoryClickEvent event) {
+        if (Config.isNotQuickShulker()) return;
         if (event.getClickedInventory() == null
                 || event.getClickedInventory().getType() != InventoryType.PLAYER) {
             return;
@@ -87,6 +94,7 @@ public class QuickListener implements Listener {
         if (!QuickUtils.isSupportItem(clickedItem)) {
             return;
         }
+        if (!QuickUtils.isSupportItemAndTrueConfig(clickedItem)) return;
         Player player = (Player) event.getWhoClicked();
         OpenedShulker openedShulker = openedShulkers.get(player.getUniqueId());
         String uuidOrNull = QuickUtils.getUUIDOrNull(clickedItem);
@@ -99,26 +107,26 @@ public class QuickListener implements Listener {
         if (player.getOpenInventory().getTopInventory().getType().equals(InventoryType.SHULKER_BOX)) {
             player.closeInventory();
         }
+        //if (tryOpenShulker(clickedItem, player)) return;
+        if (tryOpenShulker2(clickedItem, player)) return;
+        //player.getEnderChest().setContents();
+        tryOpenWorkbench(clickedItem, player);
+        tryOpenEnderChest(clickedItem, player);
+    }
+
+    private boolean tryOpenShulker2(ItemStack clickedItem, Player player) {
+        if (!Config.isCan_open_shulker()) return false;
         if (QuickUtils.isShulkerBox(clickedItem)) {
-            int slot = event.getSlot();
             String s = QuickUtils.getItemUUIDOrCreate(clickedItem);
             Inventory shulkerInv = QuickUtils.getShulkerInventory(clickedItem, shulkerInvKey);
             openedShulkers.put(player.getUniqueId(), new OpenedShulker(s, clickedItem, shulkerInv));
             Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openInventory(shulkerInv));
             //player.openInventory(shulkerInv);
             player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1.0F, 1.0F);
-            return;
+            return true;
         }
-        //player.getEnderChest().setContents();
-        if (QuickUtils.isCraftingTable(clickedItem)) {
-            Bukkit.getServer().getScheduler().runTask(plugin,() -> player.openWorkbench(null,true));
-            //player.openInventory(plugin.getServer().createInventory(null,InventoryType.WORKBENCH));
-        }
-        if (QuickUtils.isEnderChest(clickedItem)) {
-            QuickUtils.openPlayerEnderChest(player,plugin);
-        }
+        return false;
     }
-
 
 
     @EventHandler

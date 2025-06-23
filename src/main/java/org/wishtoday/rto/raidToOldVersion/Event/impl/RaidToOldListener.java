@@ -12,12 +12,14 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
+import org.wishtoday.rto.raidToOldVersion.Config.Config;
 
 import java.util.List;
 
 public class RaidToOldListener implements Listener {
     @EventHandler
     public void onEntityPotionEffect(EntityPotionEffectEvent e) {
+        if (!Config.isRaid_to_old_version()) return;
         if (!(e.getEntity() instanceof Player player)) return;
         PotionEffectType type = e.getModifiedType();
         EntityPotionEffectEvent.Cause cause = e.getCause();
@@ -36,6 +38,7 @@ public class RaidToOldListener implements Listener {
     }
     @EventHandler
     public void onPlayerKillEntity(EntityDeathEvent e) {
+        if (!Config.isRaid_to_old_version()) return;
         if (!(e.getEntity() instanceof Raider raider)) return;
         if (!raider.isPatrolLeader()) return;
         if (raider.getRaid() != null) return;

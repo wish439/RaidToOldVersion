@@ -1,0 +1,76 @@
+#开启旧版袭击机制
+raidToOldVersion: true
+
+#开启经验吸收无冷却
+xp_no_cooldown: true
+
+#快捷潜影盒配置
+quickshulker:
+  #可以打开潜影盒
+  can_open_shulker: true
+  #可以打开工作台
+  can_open_Workbench: true
+  #可以打开末影箱
+  can_open_enderchest: true
+#文本
+texts:
+  rules_text:
+    # 发送规则标题
+    rule_text1: "§6§l» §c服务器规则 §6§l«"
+    rule_text2: "§7§m--------------------------------"
+    # 规则1: 禁止破坏/盗窃
+    rule_text3: "§f§l1. §c禁止破坏/盗窃"
+    rule_text4: " §8▪ §7破坏建筑、养殖物、偷取容器物品"
+    rule_text6: " §8▪ §7包含箱子、漏斗等所有容器"
+    rule_text7: ""  # 空行
+
+    # 规则2: 严禁作弊
+    rule_text8: "§f§l2. §c严禁作弊"
+    rule_text9: " §8▪ §7禁用任何作弊客户端/AI脚本"
+    rule_text10: " §8▪ §7禁止自动采集等违规操作"
+    rule_text11: ""  # 空行
+
+    # 规则3: 文明聊天
+    rule_text12: "§f§l3. §c文明聊天"
+    rule_text13: " §8▪ §7禁止脏话、人身攻击"
+    rule_text14: " §8▪ §7禁止阴阳怪气等不良言论"
+    rule_text15: " §8▪ §7禁止发送广告/联系方式"
+    rule_text16: ""  # 空行
+
+    # 规则4: 交易免责
+    rule_text17: "§f§l4. §c交易免责"
+    rule_text18: " §8▪ §7玩家私下交易风险自负"
+    rule_text19: " §8▪ §7官方不处理货币交易纠纷"
+    rule_text20: ""  # 空行
+
+    # 规则5: 漏洞禁令
+    rule_text21: "§f§l5. §c漏洞禁令"
+    rule_text22: " §8▪ §7禁止利用BUG刷物品"
+    rule_text23: " §8▪ §7禁止讨论/传播漏洞信息"
+    rule_text24: " §8▪ §7发现漏洞应立即报告管理员"
+    rule_text25: ""  # 空行
+
+    # 规则6: 红石规范
+    rule_text26: "§f§l6. §c红石规范"
+    rule_text27: " §8▪ §7允许红石机械/刷怪塔"
+    rule_text28: " §8▪ §7禁止高效率卡服装置"
+    rule_text29: " §8▪ §7造成服务器卡顿将拆除并处罚"
+    rule_text30: ""  # 空行
+
+    # 规则7: 物品责任
+    rule_text31: "§f§l7. §c物品责任"
+    rule_text32: " §8▪ §7自身原因丢失物品不补偿"
+    rule_text33: " §8▪ §7不予协助回档/找回"
+    rule_text34: " §8▪ §7领地内物品请自行设置保护"
+    rule_text35: ""  # 空行
+
+    # 规则8: 违规处理
+    rule_text36: "§f§l8. §c违规处理"
+    rule_text37: " §8▪ §7按违规严重程度处罚"
+    rule_text38: " §8▪ §7包含警告/踢出/封禁等处置"
+    rule_text39: " §8▪ §7多次违规将永久封禁"
+
+    # ======= 规则结尾 ======= #
+    rule_text40: "§7§m--------------------------------"
+    rule_text41: "§e⚠ 最终解释权归服务器管理团队所有"
+    rule_text42: "§a请遵守规则，共同营造良好游戏环境"
