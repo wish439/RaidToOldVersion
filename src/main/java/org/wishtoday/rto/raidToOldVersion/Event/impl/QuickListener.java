@@ -56,23 +56,12 @@ public class QuickListener implements Listener {
         event.setCancelled(true);
 
         tryOpenShulker2(itemInHand, player);
-        tryOpenWorkbench(itemInHand, player);
-        tryOpenEnderChest(itemInHand, player);
+        QuickUtils.tryOpenWorkbench(plugin,itemInHand, player);
+        QuickUtils.tryOpenEnderChest(plugin, itemInHand, player);
+        QuickUtils.tryOpenSmithingTable(plugin, itemInHand, player);
+        QuickUtils.tryOpenStonecutter(plugin, itemInHand, player);
     }
 
-    private void tryOpenEnderChest(ItemStack itemInHand, Player player) {
-        if (!Config.isCan_open_enderchest()) return;
-        if (QuickUtils.isEnderChest(itemInHand)) {
-            QuickUtils.openPlayerEnderChest(player,plugin);
-        }
-    }
-
-    private void tryOpenWorkbench(ItemStack itemInHand, Player player) {
-        if (!Config.isCan_open_workbench()) return;
-        if (QuickUtils.isCraftingTable(itemInHand)) {
-            Bukkit.getServer().getScheduler().runTask(plugin,() -> player.openWorkbench(null,true));
-        }
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryRight(InventoryClickEvent event) {
@@ -110,8 +99,10 @@ public class QuickListener implements Listener {
         //if (tryOpenShulker(clickedItem, player)) return;
         if (tryOpenShulker2(clickedItem, player)) return;
         //player.getEnderChest().setContents();
-        tryOpenWorkbench(clickedItem, player);
-        tryOpenEnderChest(clickedItem, player);
+        QuickUtils.tryOpenWorkbench(plugin,clickedItem, player);
+        QuickUtils.tryOpenEnderChest(plugin, clickedItem, player);
+        QuickUtils.tryOpenSmithingTable(plugin, clickedItem, player);
+        QuickUtils.tryOpenStonecutter(plugin, clickedItem, player);
     }
 
     private boolean tryOpenShulker2(ItemStack clickedItem, Player player) {

@@ -6,10 +6,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.wishtoday.rto.raidToOldVersion.Command.RTOCommand;
-import org.wishtoday.rto.raidToOldVersion.Command.RulesCommand;
-import org.wishtoday.rto.raidToOldVersion.Command.SetKeepInventory;
-import org.wishtoday.rto.raidToOldVersion.Command.TickAttack;
+import org.wishtoday.rto.raidToOldVersion.Command.*;
 import org.wishtoday.rto.raidToOldVersion.Event.RegisterEvent;
 import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
 
@@ -41,6 +38,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
             RulesCommand.registerCommand(registrar);
             SetKeepInventory.registerCommand(registrar);
             TickAttack.registerCommand(registrar);
+            QuickShulkerCommand.registerQuickCommands(registrar);
         });
     }
 

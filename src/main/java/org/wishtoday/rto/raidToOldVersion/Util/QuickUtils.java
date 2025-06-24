@@ -26,12 +26,37 @@ public class QuickUtils {
     public static final NamespacedKey ITEMUUID = new NamespacedKey(RaidToOldVersion.getInstance(), "item_uuid");
 
     public static boolean isSupportItem(ItemStack item) {
-        return isShulkerBox(item) || isCraftingTable(item) || isEnderChest(item);
+        return isShulkerBox(item)
+                || isCraftingTable(item)
+                || isEnderChest(item)
+                || isSmithingTable(item)
+                || isStonecutter(item);
     }
+
     public static boolean isSupportItemAndTrueConfig(ItemStack item) {
         return isShulkerAndTrueConfig(item)
                 || isCraftingTableAndTrueConfig(item)
-                || isEnderChestAndTrueConfig(item);
+                || isEnderChestAndTrueConfig(item)
+                || isSmithingTableAndTrueConfig(item)
+                || isStonecutterAndTrueConfig(item);
+    }
+    public static boolean isStonecutter(ItemStack item) {
+        if (item == null) return false;
+        Material type = item.getType();
+        return type == Material.STONECUTTER;
+    }
+    public static boolean isStonecutterAndTrueConfig(ItemStack item) {
+        return isStonecutter(item) && Config.isCan_open_stonecutter();
+    }
+
+    public static boolean isSmithingTable(ItemStack item) {
+        if (item == null) return false;
+        Material type = item.getType();
+        return type == Material.SMITHING_TABLE;
+    }
+
+    public static boolean isSmithingTableAndTrueConfig(ItemStack item) {
+        return isSmithingTable(item) && Config.isCan_open_smithingtable();
     }
 
     public static boolean isShulkerBox(ItemStack item) {
@@ -39,6 +64,7 @@ public class QuickUtils {
         Material type = item.getType();
         return type.name().endsWith("SHULKER_BOX");
     }
+
     public static boolean isShulkerAndTrueConfig(ItemStack item) {
         return isShulkerBox(item) && Config.isCan_open_shulker();
     }
@@ -48,6 +74,7 @@ public class QuickUtils {
         Material type = item.getType();
         return type == Material.CRAFTING_TABLE && item.getAmount() == 1;
     }
+
     public static boolean isCraftingTableAndTrueConfig(ItemStack item) {
         return isCraftingTable(item) && Config.isCan_open_workbench();
     }
@@ -57,6 +84,7 @@ public class QuickUtils {
         Material type = item.getType();
         return type == Material.ENDER_CHEST && item.getAmount() == 1;
     }
+
     public static boolean isEnderChestAndTrueConfig(ItemStack item) {
         return isEnderChest(item) && Config.isCan_open_enderchest();
     }
@@ -255,6 +283,7 @@ public class QuickUtils {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         return container.has(ITEMUUID, PersistentDataType.STRING);
     }
+
     public static String getUUIDOrDefault(ItemStack stack, String defaultValue) {
         if (stack == null) return defaultValue;
         ItemMeta meta = stack.getItemMeta();
@@ -263,7 +292,55 @@ public class QuickUtils {
         if (!hasUUID(stack)) return defaultValue;
         return container.get(ITEMUUID, PersistentDataType.STRING);
     }
+
     public static String getUUIDOrNull(ItemStack stack) {
         return getUUIDOrDefault(stack, null);
+    }
+
+    public static void tryOpenWorkbench(RaidToOldVersion plugin, Player player) {
+        if (!Config.isCan_open_workbench()) return;
+        Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openWorkbench(null, true));
+    }
+
+    public static void tryOpenWorkbench(RaidToOldVersion plugin, ItemStack itemInHand, Player player) {
+        if (!Config.isCan_open_workbench()) return;
+        if (QuickUtils.isCraftingTable(itemInHand)) {
+            Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openWorkbench(null, true));
+        }
+    }
+
+    public static void tryOpenEnderChest(RaidToOldVersion plugin, Player player) {
+        if (!Config.isCan_open_enderchest()) return;
+        QuickUtils.openPlayerEnderChest(player, plugin);
+    }
+
+    public static void tryOpenEnderChest(RaidToOldVersion plugin, ItemStack itemInHand, Player player) {
+        if (!Config.isCan_open_enderchest()) return;
+        if (QuickUtils.isEnderChest(itemInHand)) {
+            QuickUtils.openPlayerEnderChest(player, plugin);
+        }
+    }
+
+    public static void tryOpenSmithingTable(RaidToOldVersion plugin, Player player) {
+        if (!Config.isCan_open_smithingtable()) return;
+        Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openSmithingTable(null, true));
+    }
+
+    public static void tryOpenSmithingTable(RaidToOldVersion plugin, ItemStack itemInHand, Player player) {
+        if (!Config.isCan_open_smithingtable()) return;
+        if (QuickUtils.isSmithingTable(itemInHand)) {
+            Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openSmithingTable(null, true));
+        }
+    }
+
+    public static void tryOpenStonecutter(RaidToOldVersion plugin, Player player) {
+        if (!Config.isCan_open_stonecutter()) return;
+        Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openStonecutter(null, true));
+    }
+    public static void tryOpenStonecutter(RaidToOldVersion plugin, ItemStack itemInHand, Player player) {
+        if (!Config.isCan_open_stonecutter()) return;
+        if (isStonecutter(itemInHand)) {
+            Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openStonecutter(null, true));
+        }
     }
 }

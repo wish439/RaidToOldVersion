@@ -12,6 +12,10 @@ quickshulker:
   can_open_Workbench: true
   #可以打开末影箱
   can_open_enderchest: true
+  #可以打开锻造台
+  can_open_smithingTable: true
+  #可以打开切石机
+  can_open_stonecutter: true
 #文本
 texts:
   rules_text:
