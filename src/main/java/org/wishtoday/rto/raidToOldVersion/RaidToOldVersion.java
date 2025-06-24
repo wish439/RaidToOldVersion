@@ -1,5 +1,8 @@
 package org.wishtoday.rto.raidToOldVersion;
 
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEvent;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,15 +25,25 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         // Plugin startup logic
         instance = this;
         saveDefaultConfig();
-        getCommand("tickattack").setExecutor(new TickAttack());
-        getCommand("setkeepinventory").setExecutor(new SetKeepInventory());
-        getCommand("rules").setExecutor(new RulesCommand());
-        getCommand("rto").setExecutor(new RTOCommand());
+        //getCommand("tickattack").setExecutor(new TickAttack());
+        registerCommands();
+        //getCommand("rto").setExecutor(new RTOCommand());
         shulkerInvKey = new NamespacedKey(this, "shulker_inventory");
 
         RegisterEvent.register(this, shulkerInvKey);
         getServer().getPluginManager().registerEvents(this, this);
     }
+
+    private void registerCommands() {
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+            Commands registrar = event.registrar();
+            RTOCommand.registerCommand(registrar);
+            RulesCommand.registerCommand(registrar);
+            SetKeepInventory.registerCommand(registrar);
+            TickAttack.registerCommand(registrar);
+        });
+    }
+
     public static RaidToOldVersion getInstance() {
         return instance;
     }
@@ -43,6 +56,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
     public void onDisable() {
         // Plugin shutdown logic
     }
+
     public boolean isHandInteractEnabled() {
         return true;
     }

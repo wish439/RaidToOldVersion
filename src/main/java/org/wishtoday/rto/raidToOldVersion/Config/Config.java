@@ -15,7 +15,7 @@ public class Config {
     public static final String CAN_OPEN_SHULKER = "quickshulker.can_open_shulker";
     public static final String CAN_OPEN_WORKBENCH = "quickshulker.can_open_Workbench";
     public static final String CAN_OPEN_ENDERCHEST = "quickshulker.can_open_enderchest";
-    public static final String RULES_TEXT = "rules_text";
+    public static final String RULES_TEXT = "texts.rules_text";
     private static boolean raid_to_old_version = configuration.getBoolean(RAID_TO_OLD_VERSION_CONFIG_KEY, true);
     private static boolean xp_no_cooldown = configuration.getBoolean(XP_NO_COOLDOWN, true);
     private static boolean can_open_shulker = configuration.getBoolean(CAN_OPEN_SHULKER, true);

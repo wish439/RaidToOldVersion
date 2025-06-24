@@ -1,7 +1,11 @@
 package org.wishtoday.rto.raidToOldVersion.Command;
 
+import com.mojang.brigadier.SingleRedirectModifier;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.tree.LiteralCommandNode;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -11,8 +15,42 @@ import java.util.UUID;
 
 import static org.wishtoday.rto.raidToOldVersion.RaidToOldVersion.PlayerAndTicks;
 
-public class TickAttack implements CommandExecutor {
-    @Override
+public class TickAttack {
+    public static void registerCommand(Commands commands) {
+        //LiteralCommandNode<CommandSourceStack> build = getTkCommand();
+        commands.register(getTkCommand("tk"));
+        /*commands.register(
+                Commands.literal("tickattck").redirect(build).build()
+        );*/
+        commands.register(
+                getTkCommand("tickattack")
+        );
+    }
+
+    private static LiteralCommandNode<CommandSourceStack> getTkCommand(String name) {
+        LiteralCommandNode<CommandSourceStack> build =
+                Commands.literal(name)
+                        .executes(
+                                context -> {
+                                    if (!(context.getSource().getSender() instanceof Player player)) return 0;
+                                    if (!hasUUIDFromList(player.getUniqueId())) return 0;
+                                    return removeFromList(player.getUniqueId(), player);
+                                }
+                        )
+                        .then(
+                                Commands.argument("attacktick", IntegerArgumentType.integer())
+                                        .executes(
+                                                context -> {
+                                                    int i = IntegerArgumentType.getInteger(context, "attacktick");
+                                                    if (!(context.getSource().getSender() instanceof Player player)) return 0;
+                                                    UUID uuid = player.getUniqueId();
+                                                    return addToList(i, uuid, player);
+                                                }
+                                        )
+                        ).build();
+        return build;
+    }
+
     public boolean onCommand(@NotNull CommandSender sender
             , @NotNull Command command
             , @NotNull String label, @NotNull String[] args) {
@@ -40,18 +78,20 @@ public class TickAttack implements CommandExecutor {
         return true;
     }
 
-    public void addToList(int i, UUID uuid, Player player) {
+    public static int addToList(int i, UUID uuid, Player player) {
         PlayerAndTicks.removeIf(playerAttacks -> playerAttacks.getUuid().equals(uuid));
         PlayerAndTicks.add(new PlayerAttacks(i, uuid));
         player.sendMessage("你现在每隔" + i + "tick后会攻击");
+        return 1;
     }
 
-    public void removeFromList(UUID uuid, Player player) {
+    public static int removeFromList(UUID uuid, Player player) {
         PlayerAndTicks.removeIf(playerAttacks -> playerAttacks.getUuid().equals(uuid));
         player.sendMessage("你现在不会攻击了");
+        return 1;
     }
 
-    public boolean hasUUIDFromList(UUID uuid) {
+    public static boolean hasUUIDFromList(UUID uuid) {
         for (PlayerAttacks playerAndTick : PlayerAndTicks) {
             if (playerAndTick.getUuid().equals(uuid)) {
                 return true;

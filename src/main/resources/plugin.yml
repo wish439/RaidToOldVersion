@@ -3,18 +3,3 @@ version: "${version}"
 main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
 api-version: '1.21'
 authors: [wishtoday,Tahoma34]
-commands:
-  tickattack:
-    description: TickAttack Command
-    aliases: [tk,tickak]
-    usage: /<command> <数字> -> 设置多少tick攻击,/<command> -> 取消
-  setkeepinventory:
-    description: setkeepinventory
-    usage: /setkeepinventory -> 可开启关闭
-  rules:
-    description: 显示服务器规则
-    usage: /rules
-  rto:
-    description: raidToOldVersion Mod Main Command
-    usage: /rto reload -> 刷新配置文件
-    permission: op
