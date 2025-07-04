@@ -35,7 +35,6 @@ public class QuickListener implements Listener {
     private final NamespacedKey shulkerInvKey;
 
     private final Map<UUID, OpenedShulker> openedShulkers = new HashMap<>();
-    private final Map<UUID, Inventory> pendingSaveInventories = new HashMap<>();
 
     public QuickListener(RaidToOldVersion plugin, NamespacedKey shulkerInvKey) {
         this.plugin = plugin;
@@ -206,7 +205,6 @@ public class QuickListener implements Listener {
 
     private @Nullable ItemStack trySaveShulker(Inventory closedInv, Player player) {
         UUID uuid = player.getUniqueId();
-        pendingSaveInventories.put(uuid,closedInv);
         OpenedShulker os = openedShulkers.get(uuid);
         if (os == null) {
             return null;
@@ -233,7 +231,6 @@ public class QuickListener implements Listener {
             }
             openedShulkers.remove(uuid);
         }
-        pendingSaveInventories.remove(uuid);
         return null;
     }
 
