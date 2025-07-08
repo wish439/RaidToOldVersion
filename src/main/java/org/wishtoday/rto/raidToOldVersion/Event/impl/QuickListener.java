@@ -1,6 +1,5 @@
 package org.wishtoday.rto.raidToOldVersion.Event.impl;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.NamespacedKey;
@@ -10,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,6 +26,8 @@ import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 import java.util.UUID;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.wishtoday.rto.raidToOldVersion.Util.FoliaUtils.tryRunTask;
 
 public class QuickListener implements Listener {
 
@@ -128,9 +128,12 @@ public class QuickListener implements Listener {
                 !(topInventory.getType() != InventoryType.PLAYER
                         && bottomInventory.getType() != InventoryType.SHULKER_BOX))
             return;
-        Bukkit.getServer().getScheduler().runTask(plugin, () -> {
+        tryRunTask(plugin, () -> {
             trySaveShulker(topInventory, player);
         });
+        /*Bukkit.getServer().getScheduler().runTask(plugin, () -> {
+            trySaveShulker(topInventory, player);
+        });*/
     }
 
     @EventHandler
@@ -143,9 +146,12 @@ public class QuickListener implements Listener {
         HumanEntity humanEntity = event.getWhoClicked();
         if (!(humanEntity instanceof Player player)) return;
         if (!hasOpenedShulker(player.getUniqueId())) return;
-        Bukkit.getServer().getScheduler().runTask(plugin, () -> {
+        tryRunTask(plugin, () -> {
             trySaveShulker(clickedInventory, player);
         });
+        /*Bukkit.getServer().getScheduler().runTask(plugin, () -> {
+            trySaveShulker(clickedInventory, player);
+        });*/
     }
 
     @EventHandler
@@ -182,7 +188,14 @@ public class QuickListener implements Listener {
             String s = QuickUtils.getItemUUIDOrCreate(clickedItem);
             Inventory shulkerInv = QuickUtils.getShulkerInventory(clickedItem, shulkerInvKey);
             openedShulkers.put(player.getUniqueId(), new OpenedShulker(s, clickedItem, shulkerInv));
-            Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openInventory(shulkerInv));
+            tryRunTask(plugin, () -> {
+                player.openInventory(shulkerInv);
+            });
+            /*if (HandySchedulerUtil.isFolia()) {
+                HandySchedulerUtil.runTask(() -> player.openInventory(shulkerInv));
+            }else {
+                Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openInventory(shulkerInv));
+            }*/
             //player.openInventory(shulkerInv);
             player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1.0F, 1.0F);
             return true;

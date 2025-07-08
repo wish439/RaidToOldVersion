@@ -3,3 +3,4 @@ version: "${version}"
 main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
 api-version: '1.21'
 authors: [wishtoday,Tahoma34]
+folia-supported: true

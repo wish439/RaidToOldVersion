@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id 'io.github.goooler.shadow' version '8.1.7'
 }
 
 group = 'org.wishtoday.rto'
@@ -26,12 +27,16 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
 }
 
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-    implementation("org.spongepowered:mixin:0.8.5")
+    implementation 'com.github.TechnicallyCoded:FoliaLib:0.4.3'
 }
 
 tasks {
@@ -59,6 +64,9 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release.set(targetJavaVersion)
     }
+}
+shadowJar {
+    relocate "com.tcoded.folialib", "org.wishtoday.rto.raidToOldVersion.lib.folialib"
 }
 
 processResources {

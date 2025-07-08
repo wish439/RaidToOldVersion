@@ -1,7 +1,7 @@
 package org.wishtoday.rto.raidToOldVersion;
 
+import com.tcoded.folialib.FoliaLib;
 import io.papermc.paper.command.brigadier.Commands;
-import io.papermc.paper.plugin.lifecycle.event.LifecycleEvent;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.*;
 import org.bukkit.event.Listener;
@@ -16,11 +16,14 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
     private static RaidToOldVersion instance;
     private NamespacedKey shulkerInvKey;
     public static List<PlayerAttacks> PlayerAndTicks = new ArrayList<>();
+    private static FoliaLib foliaLib;
+
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+        foliaLib = new FoliaLib(this);
         saveDefaultConfig();
         //getCommand("tickattack").setExecutor(new TickAttack());
         registerCommands();
@@ -29,6 +32,9 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
 
         RegisterEvent.register(this, shulkerInvKey);
         getServer().getPluginManager().registerEvents(this, this);
+    }
+    public static FoliaLib getFoliaLib() {
+        return foliaLib;
     }
 
     private void registerCommands() {

@@ -22,6 +22,9 @@ import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 
 import java.util.UUID;
 
+import static org.wishtoday.rto.raidToOldVersion.Util.FoliaUtils.tryRunTask;
+
+
 public class QuickUtils {
     public static final NamespacedKey ITEMUUID = new NamespacedKey(RaidToOldVersion.getInstance(), "item_uuid");
 
@@ -160,9 +163,12 @@ public class QuickUtils {
         if (player.getOpenInventory().getTopInventory().getType() == InventoryType.SHULKER_BOX) {
             player.closeInventory();
         }
-        plugin.getServer().getScheduler().runTask(plugin, () -> {
+        tryRunTask(plugin, () -> {
             player.openInventory(player.getEnderChest());
         });
+        /*plugin.getServer().getScheduler().runTask(plugin, () -> {
+            player.openInventory(player.getEnderChest());
+        });*/
     }
 
     public static ItemStack updateShulkerItem(ItemStack item, Inventory inv, NamespacedKey key) {
@@ -299,13 +305,18 @@ public class QuickUtils {
 
     public static void tryOpenWorkbench(RaidToOldVersion plugin, Player player) {
         if (!Config.isCan_open_workbench()) return;
-        Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openWorkbench(null, true));
+        tryRunTask(plugin, () -> player.openWorkbench(null, true));
+        /*Bukkit.getServer().getScheduler().runTask(plugin,
+                () -> player.openWorkbench(null, true));*/
     }
 
     public static void tryOpenWorkbench(RaidToOldVersion plugin, ItemStack itemInHand, Player player) {
         if (!Config.isCan_open_workbench()) return;
         if (QuickUtils.isCraftingTable(itemInHand)) {
-            Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openWorkbench(null, true));
+            tryRunTask(plugin, () -> {
+                player.openWorkbench(null, true);
+            });
+            //Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openWorkbench(null, true));
         }
     }
 
@@ -323,24 +334,36 @@ public class QuickUtils {
 
     public static void tryOpenSmithingTable(RaidToOldVersion plugin, Player player) {
         if (!Config.isCan_open_smithingtable()) return;
-        Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openSmithingTable(null, true));
+        tryRunTask(plugin, () -> {
+            player.openSmithingTable(null, true);
+        });
+        //Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openSmithingTable(null, true));
     }
 
     public static void tryOpenSmithingTable(RaidToOldVersion plugin, ItemStack itemInHand, Player player) {
         if (!Config.isCan_open_smithingtable()) return;
         if (QuickUtils.isSmithingTable(itemInHand)) {
-            Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openSmithingTable(null, true));
+            tryRunTask(plugin, () -> {
+                player.openSmithingTable(null, true);
+            });
+            //Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openSmithingTable(null, true));
         }
     }
 
     public static void tryOpenStonecutter(RaidToOldVersion plugin, Player player) {
         if (!Config.isCan_open_stonecutter()) return;
-        Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openStonecutter(null, true));
+        tryRunTask(plugin, () -> {
+            player.openStonecutter(null, true);
+        });
+        //Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openStonecutter(null, true));
     }
     public static void tryOpenStonecutter(RaidToOldVersion plugin, ItemStack itemInHand, Player player) {
         if (!Config.isCan_open_stonecutter()) return;
         if (isStonecutter(itemInHand)) {
-            Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openStonecutter(null, true));
+            tryRunTask(plugin, () -> {
+                player.openStonecutter(null, true);
+            });
+            //Bukkit.getServer().getScheduler().runTask(plugin, () -> player.openStonecutter(null, true));
         }
     }
 }
