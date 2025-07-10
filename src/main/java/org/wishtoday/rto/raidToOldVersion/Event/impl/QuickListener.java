@@ -161,10 +161,21 @@ public class QuickListener implements Listener {
             event.setCancelled(true);
         }
     }
+    @EventHandler
+    private void onPlayerClickShulker(InventoryClickEvent event) {
+        ItemStack item = event.getCurrentItem();
+        if (isOpenedShulker(item)) {
+            event.setCancelled(true);
+        }
+    }
 
     private boolean isOpenedShulker(Item item) {
         if (item == null) return false;
         ItemStack stack = item.getItemStack();
+        return isOpenedShulker(stack);
+    }
+    private boolean isOpenedShulker(ItemStack stack) {
+        if (stack == null) return false;
         if (!QuickUtils.isShulkerBox(stack)) return false;
         String s = stack.getItemMeta().getPersistentDataContainer().has(QuickUtils.ITEMUUID) ? stack.getItemMeta().getPersistentDataContainer().get(QuickUtils.ITEMUUID, PersistentDataType.STRING) : null;
         if (s == null) return false;

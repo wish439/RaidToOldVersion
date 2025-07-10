@@ -1,5 +1,7 @@
 package org.wishtoday.rto.raidToOldVersion;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.tcoded.folialib.FoliaLib;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -8,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.rto.raidToOldVersion.Command.*;
 import org.wishtoday.rto.raidToOldVersion.Event.RegisterEvent;
+import org.wishtoday.rto.raidToOldVersion.Event.impl.PlaceBlockPacket;
 import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
 
 import java.util.*;
@@ -17,6 +20,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
     private NamespacedKey shulkerInvKey;
     public static List<PlayerAttacks> PlayerAndTicks = new ArrayList<>();
     private static FoliaLib foliaLib;
+    private ProtocolManager protocolManager;
 
 
     @Override
@@ -24,6 +28,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         // Plugin startup logic
         instance = this;
         foliaLib = new FoliaLib(this);
+        protocolManager = ProtocolLibrary.getProtocolManager();
         saveDefaultConfig();
         //getCommand("tickattack").setExecutor(new TickAttack());
         registerCommands();
@@ -32,9 +37,13 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
 
         RegisterEvent.register(this, shulkerInvKey);
         getServer().getPluginManager().registerEvents(this, this);
+        protocolManager.addPacketListener(new PlaceBlockPacket(this));
     }
     public static FoliaLib getFoliaLib() {
         return foliaLib;
+    }
+    public ProtocolManager getProtocolManager() {
+        return protocolManager;
     }
 
     private void registerCommands() {
