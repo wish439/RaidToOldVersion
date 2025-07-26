@@ -13,5 +13,9 @@ public class RegisterEvent {
         manager.registerEvents(new RaidToOldListener(), plugin);
         manager.registerEvents(new CustomKeepInventoryListener(), plugin);
         manager.registerEvents(new XPNoCooldownListener(), plugin);
+        manager.registerEvents(new PlayerListener(), plugin);
+        //manager.registerEvents(new StructureRenderEvent(), plugin);
+        manager.registerEvents(new PlayerExpEvent(), plugin);
+        manager.registerEvents(new ProHitEvent(), plugin);
     }
 }
