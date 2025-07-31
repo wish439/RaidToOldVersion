@@ -16,6 +16,6 @@ public class RegisterEvent {
         manager.registerEvents(new PlayerListener(), plugin);
         //manager.registerEvents(new StructureRenderEvent(), plugin);
         manager.registerEvents(new PlayerExpEvent(), plugin);
-        manager.registerEvents(new ProHitEvent(), plugin);
+        //manager.registerEvents(new ProHitEvent(), plugin);
     }
 }

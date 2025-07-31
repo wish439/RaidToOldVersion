@@ -20,7 +20,7 @@ public class ProHitEvent implements Listener {
         if (id == null) return;
         Player player = Bukkit.getPlayer(id);
         if (player == null) return;
-        livingEntity.knockback(0.3, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
-        livingEntity.damage(0);
+        //livingEntity.knockback(0.5, player.getX() - livingEntity.getX(), player.getZ() - livingEntity.getZ());
+        livingEntity.damage(0,player);
     }
 }
