@@ -2,16 +2,11 @@ package org.wishtoday.rto.raidToOldVersion;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.PacketEventsAPI;
-import com.github.retrooper.packetevents.settings.PacketEventsSettings;
 import com.tcoded.folialib.FoliaLib;
-import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.*;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.rto.raidToOldVersion.Command.*;
 import org.wishtoday.rto.raidToOldVersion.Event.RegisterEvent;
@@ -25,8 +20,8 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
     public static List<PlayerAttacks> PlayerAndTicks = new ArrayList<>();
     private static FoliaLib foliaLib;
     private ProtocolManager protocolManager;
-    private PacketEventsAPI<?> packetEventsAPI;
-    private PacketEventsSettings settings;
+    //private PacketEventsAPI<?> packetEventsAPI;
+    //private PacketEventsSettings settings;
 
 
     @Override
@@ -38,7 +33,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         saveDefaultConfig();
         //getCommand("tickattack").setExecutor(new TickAttack());
         registerCommands();
-        packetEventsAPI.init();
+        //packetEventsAPI.init();
         //getCommand("rto").setExecutor(new RTOCommand());
         shulkerInvKey = new NamespacedKey(this, "shulker_inventory");
 
@@ -49,7 +44,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
 
     }
 
-    @Override
+    /*@Override
     public void onLoad() {
         PacketEventsAPI<Plugin> build = SpigotPacketEventsBuilder.build(this);
         PacketEvents.setAPI(build);
@@ -57,13 +52,13 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         settings = packetEventsAPI.getSettings();
         packetEventsAPI.load();
         settings.checkForUpdates(false);
-        /*packetEventsAPI.getEventManager().registerListener(
+        *//*packetEventsAPI.getEventManager().registerListener(
                 new EasyPlace(this), PacketListenerPriority.NORMAL
-        );*/
-        /*packetEventsAPI.getEventManager().registerListener(
+        );*//*
+        *//*packetEventsAPI.getEventManager().registerListener(
                 new CustomPayloadListener(), PacketListenerPriority.NORMAL
-        );*/
-    }
+        );*//*
+    }*/
 
     public static FoliaLib getFoliaLib() {
         return foliaLib;
@@ -71,9 +66,9 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
     public ProtocolManager getProtocolManager() {
         return protocolManager;
     }
-    public PacketEventsAPI<?> getPacketEventsAPI() {
+    /*public PacketEventsAPI<?> getPacketEventsAPI() {
         return packetEventsAPI;
-    }
+    }*/
 
     private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
@@ -94,10 +89,10 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         return shulkerInvKey;
     }
 
-    @Override
+    /*@Override
     public void onDisable() {
         packetEventsAPI.terminate();
-    }
+    }*/
 
     public boolean isHandInteractEnabled() {
         return true;

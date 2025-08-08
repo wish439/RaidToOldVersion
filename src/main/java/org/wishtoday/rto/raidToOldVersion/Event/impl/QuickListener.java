@@ -221,7 +221,6 @@ public class QuickListener implements Listener {
         Inventory closedInv = event.getInventory();
         ItemStack stack = trySaveShulker(closedInv, player);
         if (stack != null) QuickUtils.removeUUID(stack);
-        if (closedInv == null) return;
         if (closedInv.equals(player.getEnderChest())) {
             QuickUtils.saveEnderChestInventory(closedInv, player);
         }
@@ -236,6 +235,7 @@ public class QuickListener implements Listener {
         if (closedInv.equals(os.shulkerInventory)) {
             PlayerInventory playerInventory = player.getInventory();
             int slot = QuickUtils.findShulkerFromUUID(os.uuid, playerInventory);
+            if (slot == -1) return null;
             ItemStack item = playerInventory.getItem(slot);
             ItemStack updatedShulker = QuickUtils.updateShulkerItem(item, closedInv, shulkerInvKey);
             if (slot >= 0) {

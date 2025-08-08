@@ -17,6 +17,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import org.wishtoday.rto.raidToOldVersion.Util.FoliaUtils;
 
+@Deprecated
 public class PlaceBlockPacket extends PacketAdapter {
 
     public PlaceBlockPacket(Plugin plugin) {

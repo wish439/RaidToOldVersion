@@ -9,6 +9,6 @@ public class ChatEvent implements Listener {
     @EventHandler
     public void onChat(AsyncChatEvent event) {
         Component message = event.message();
-        System.out.println(message);
+        //System.out.println(message);
     }
 }

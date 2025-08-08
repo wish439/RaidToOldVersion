@@ -271,7 +271,7 @@ public class QuickUtils {
         return uuid;
     }
 
-    public static void removeUUID(ItemStack stack) {
+    public static void removeUUID(@NotNull ItemStack stack) {
         if (stack == null) return;
         ItemMeta meta = stack.getItemMeta();
         if (meta == null) return;
