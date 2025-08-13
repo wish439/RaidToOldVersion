@@ -6,6 +6,7 @@ import com.tcoded.folialib.FoliaLib;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.*;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.rto.raidToOldVersion.Command.*;
@@ -89,10 +90,10 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         return shulkerInvKey;
     }
 
-    /*@Override
+    @Override
     public void onDisable() {
-        packetEventsAPI.terminate();
-    }*/
+        HandlerList.unregisterAll();
+    }
 
     public boolean isHandInteractEnabled() {
         return true;
