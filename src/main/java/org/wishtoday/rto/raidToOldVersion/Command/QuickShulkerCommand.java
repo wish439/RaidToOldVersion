@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 import org.wishtoday.rto.raidToOldVersion.Util.QuickUtils;
 
+@SuppressWarnings({"UnstableApiUsage","SpellCheckingInspection"})
 public class QuickShulkerCommand {
     public static void registerQuickCommands(Commands commands) {
         RaidToOldVersion instance = RaidToOldVersion.getInstance();

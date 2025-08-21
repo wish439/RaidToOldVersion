@@ -29,6 +29,7 @@ import java.util.Map;
 
 import static org.wishtoday.rto.raidToOldVersion.Util.FoliaUtils.tryRunTask;
 
+@SuppressWarnings({"SpellCheckingInspection", "CommentedOutCode"})
 public class QuickListener implements Listener {
 
     private final RaidToOldVersion plugin;
@@ -128,9 +129,7 @@ public class QuickListener implements Listener {
                 !(topInventory.getType() != InventoryType.PLAYER
                         && bottomInventory.getType() != InventoryType.SHULKER_BOX))
             return;
-        tryRunTask(plugin, () -> {
-            trySaveShulker(topInventory, player);
-        });
+        tryRunTask(plugin, () -> trySaveShulker(topInventory, player));
         /*Bukkit.getServer().getScheduler().runTask(plugin, () -> {
             trySaveShulker(topInventory, player);
         });*/
@@ -146,9 +145,7 @@ public class QuickListener implements Listener {
         HumanEntity humanEntity = event.getWhoClicked();
         if (!(humanEntity instanceof Player player)) return;
         if (!hasOpenedShulker(player.getUniqueId())) return;
-        tryRunTask(plugin, () -> {
-            trySaveShulker(clickedInventory, player);
-        });
+        tryRunTask(plugin, () -> trySaveShulker(clickedInventory, player));
         /*Bukkit.getServer().getScheduler().runTask(plugin, () -> {
             trySaveShulker(clickedInventory, player);
         });*/
@@ -189,6 +186,7 @@ public class QuickListener implements Listener {
         return b;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean hasOpenedShulker(UUID uuid) {
         return openedShulkers.containsKey(uuid);
     }
@@ -199,9 +197,7 @@ public class QuickListener implements Listener {
             String s = QuickUtils.getItemUUIDOrCreate(clickedItem);
             Inventory shulkerInv = QuickUtils.getShulkerInventory(clickedItem, shulkerInvKey);
             openedShulkers.put(player.getUniqueId(), new OpenedShulker(s, clickedItem, shulkerInv));
-            tryRunTask(plugin, () -> {
-                player.openInventory(shulkerInv);
-            });
+            tryRunTask(plugin, () -> player.openInventory(shulkerInv));
             /*if (HandySchedulerUtil.isFolia()) {
                 HandySchedulerUtil.runTask(() -> player.openInventory(shulkerInv));
             }else {
@@ -240,8 +236,7 @@ public class QuickListener implements Listener {
             ItemStack updatedShulker = QuickUtils.updateShulkerItem(item, closedInv, shulkerInvKey);
             if (slot >= 0) {
                 player.getInventory().setItem(slot, updatedShulker);
-                ItemStack stack = player.getInventory().getItem(slot);
-                return stack;
+                return player.getInventory().getItem(slot);
             } else {
                 ItemStack mainHand = player.getInventory().getItemInMainHand();
                 if (mainHand.getType() != Material.AIR && QuickUtils.isShulkerBox(mainHand)) {
@@ -258,6 +253,7 @@ public class QuickListener implements Listener {
         return null;
     }
 
+    @SuppressWarnings("unused")
     private static class OpenedShulker {
         private String uuid;
         private ItemStack shulkerItem;

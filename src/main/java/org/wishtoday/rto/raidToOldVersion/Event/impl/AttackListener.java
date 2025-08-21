@@ -2,13 +2,10 @@ package org.wishtoday.rto.raidToOldVersion.Event.impl;
 
 import com.destroystokyo.paper.event.server.ServerTickEndEvent;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.util.BoundingBox;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
@@ -30,6 +27,7 @@ public class AttackListener implements Listener {
             });
         }
     }
+    @SuppressWarnings("SameParameterValue")
     private RayTraceResult searchEntity(Player player, double maxSqDist) {
         Location location = player.getEyeLocation();
         Vector multiply = location.getDirection().multiply(4.5f);

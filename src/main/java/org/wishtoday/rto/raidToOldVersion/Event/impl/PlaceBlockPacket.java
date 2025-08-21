@@ -17,7 +17,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import org.wishtoday.rto.raidToOldVersion.Util.FoliaUtils;
 
-@Deprecated
+/*@Deprecated
+@SuppressWarnings("all")*/
 public class PlaceBlockPacket extends PacketAdapter {
 
     public PlaceBlockPacket(Plugin plugin) {
@@ -100,7 +101,11 @@ public class PlaceBlockPacket extends PacketAdapter {
                         if (block.canPlace(data)) {
                             world.setBlockData(blockPos.toLocation(world), door);
                             door.setHalf(Bisected.Half.TOP);
-                            world.setBlockData(blockPos.toLocation(world).add(0,1,0), door);
+                            Location location = blockPos.toLocation(world);
+                            location.setX(location.getBlockX());
+                            location.setY(location.getBlockY());
+                            location.setZ(location.getBlockZ());
+                            world.setBlockData(location.add(0,1,0), door);
                         }
                     }
             );
@@ -113,6 +118,9 @@ public class PlaceBlockPacket extends PacketAdapter {
                             world.setBlockData(blockPos.toLocation(world), bed);
                             Location location = getBedLocation(blockPos.toLocation(world), bed);
                             bed.setPart(Bed.Part.HEAD);
+                            location.setX(location.getBlockX());
+                            location.setY(location.getBlockY());
+                            location.setZ(location.getBlockZ());
                             world.setBlockData(location, bed);
                         }
                     }
@@ -121,7 +129,11 @@ public class PlaceBlockPacket extends PacketAdapter {
         }
         FoliaUtils.tryRunTask(plugin, () -> {
             if (block.canPlace(data)) {
-                world.setBlockData(blockPos.toLocation(world), data);
+                Location location = blockPos.toLocation(world);
+                location.setX(location.getBlockX());
+                location.setY(location.getBlockY());
+                location.setZ(location.getBlockZ());
+                world.setBlockData(location, data);
             }
         });
     }

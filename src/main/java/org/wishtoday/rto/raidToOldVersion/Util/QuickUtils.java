@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import static org.wishtoday.rto.raidToOldVersion.Util.FoliaUtils.tryRunTask;
 
+@SuppressWarnings({"SpellCheckingInspection", "UnstableApiUsage"})
 
 public class QuickUtils {
     public static final NamespacedKey ITEMUUID = new NamespacedKey(RaidToOldVersion.getInstance(), "item_uuid");

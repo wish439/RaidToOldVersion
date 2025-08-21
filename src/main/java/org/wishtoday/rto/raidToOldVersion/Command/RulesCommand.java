@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.wishtoday.rto.raidToOldVersion.Config.Config;
 
+@SuppressWarnings("UnstableApiUsage")
 public class RulesCommand{
 
 

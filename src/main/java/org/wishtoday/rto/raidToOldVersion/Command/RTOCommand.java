@@ -5,6 +5,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.wishtoday.rto.raidToOldVersion.Config.Config;
 
+@SuppressWarnings("UnstableApiUsage")
 public class RTOCommand {
     public static void registerCommand(Commands commands) {
         commands.register(

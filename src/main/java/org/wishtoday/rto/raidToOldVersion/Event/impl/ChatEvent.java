@@ -6,9 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class ChatEvent implements Listener {
+    @SuppressWarnings("unused")
     @EventHandler
     public void onChat(AsyncChatEvent event) {
-        Component message = event.message();
+         Component message = event.message();
         //System.out.println(message);
     }
 }

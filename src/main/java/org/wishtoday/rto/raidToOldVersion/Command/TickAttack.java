@@ -1,6 +1,5 @@
 package org.wishtoday.rto.raidToOldVersion.Command;
 
-import com.mojang.brigadier.SingleRedirectModifier;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -15,7 +14,9 @@ import java.util.UUID;
 
 import static org.wishtoday.rto.raidToOldVersion.RaidToOldVersion.PlayerAndTicks;
 
+@SuppressWarnings({"UnstableApiUsage","SpellCheckingInspection"})
 public class TickAttack {
+    @SuppressWarnings("CommentedOutCode")
     public static void registerCommand(Commands commands) {
         //LiteralCommandNode<CommandSourceStack> build = getTkCommand();
         commands.register(getTkCommand("tk"));
@@ -28,29 +29,29 @@ public class TickAttack {
     }
 
     private static LiteralCommandNode<CommandSourceStack> getTkCommand(String name) {
-        LiteralCommandNode<CommandSourceStack> build =
-                Commands.literal(name)
-                        .executes(
-                                context -> {
-                                    if (!(context.getSource().getSender() instanceof Player player)) return 0;
-                                    if (!hasUUIDFromList(player.getUniqueId())) return 0;
-                                    return removeFromList(player.getUniqueId(), player);
-                                }
-                        )
-                        .then(
-                                Commands.argument("attacktick", IntegerArgumentType.integer())
-                                        .executes(
-                                                context -> {
-                                                    int i = IntegerArgumentType.getInteger(context, "attacktick");
-                                                    if (!(context.getSource().getSender() instanceof Player player)) return 0;
-                                                    UUID uuid = player.getUniqueId();
-                                                    return addToList(i, uuid, player);
-                                                }
-                                        )
-                        ).build();
-        return build;
+        return Commands.literal(name)
+                .executes(
+                        context -> {
+                            if (!(context.getSource().getSender() instanceof Player player)) return 0;
+                            if (!hasUUIDFromList(player.getUniqueId())) return 0;
+                            return
+                                    removeFromList(player.getUniqueId(), player);
+                        }
+                )
+                .then(
+                        Commands.argument("attacktick", IntegerArgumentType.integer())
+                                .executes(
+                                        context -> {
+                                            int i = IntegerArgumentType.getInteger(context, "attacktick");
+                                            if (!(context.getSource().getSender() instanceof Player player)) return 0;
+                                            UUID uuid = player.getUniqueId();
+                                            return addToList(i, uuid, player);
+                                        }
+                                )
+                ).build();
     }
 
+    @SuppressWarnings("unused")
     public boolean onCommand(@NotNull CommandSender sender
             , @NotNull Command command
             , @NotNull String label, @NotNull String[] args) {
@@ -66,7 +67,7 @@ public class TickAttack {
             return true;
         }
         String arg = args[0];
-        int i = -1;
+        int i;
         try {
             i = Integer.parseInt(arg);
         } catch (NumberFormatException e) {

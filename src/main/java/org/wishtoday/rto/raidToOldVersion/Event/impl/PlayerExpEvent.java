@@ -19,6 +19,7 @@ public class PlayerExpEvent implements Listener{
         Collection<ExperienceOrb> entities = world.getNearbyEntitiesByType(ExperienceOrb.class, location, 3);
         entities.remove(orb);
         Iterator<ExperienceOrb> iterator = entities.iterator();
+        //noinspection WhileLoopReplaceableByForEach
         while (iterator.hasNext()) {
             ExperienceOrb entity = iterator.next();
             orb.setExperience(entity.getExperience() + orb.getExperience());

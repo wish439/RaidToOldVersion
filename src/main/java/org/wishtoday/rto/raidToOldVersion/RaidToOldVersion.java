@@ -11,10 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.rto.raidToOldVersion.Command.*;
 import org.wishtoday.rto.raidToOldVersion.Event.RegisterEvent;
+import org.wishtoday.rto.raidToOldVersion.Event.impl.PlaceBlockPacket;
 import org.wishtoday.rto.raidToOldVersion.Util.PlayerAttacks;
 
 import java.util.*;
 
+@SuppressWarnings({"CommentedOutCode", "SpellCheckingInspection"})
 public final class RaidToOldVersion extends JavaPlugin implements Listener {
     private static RaidToOldVersion instance;
     private NamespacedKey shulkerInvKey;
@@ -39,7 +41,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         shulkerInvKey = new NamespacedKey(this, "shulker_inventory");
 
         RegisterEvent.register(this, shulkerInvKey);
-        getServer().getPluginManager().registerEvents(this, this);
+        //getServer().getPluginManager().registerEvents(this, this);
         //protocolManager.addPacketListener(new PlaceBlockPacket(this));
         //new StructureRenderEvent().runTaskTimer(this, 0L, 20L);
 
@@ -71,6 +73,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         return packetEventsAPI;
     }*/
 
+    @SuppressWarnings("UnstableApiUsage")
     private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             Commands registrar = event.registrar();
@@ -93,6 +96,7 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         HandlerList.unregisterAll();
+        foliaLib = null;
     }
 
     public boolean isHandInteractEnabled() {

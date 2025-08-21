@@ -12,11 +12,12 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings({"UnstableApiUsage","SpellCheckingInspection"})
 public class SetKeepInventory {
     private static final NamespacedKey KeepInventoryState =
             new NamespacedKey("raidtooldversion", "keep_inventory_state");
-    private static Component yes = Component.text("死亡不掉落已开启").color(NamedTextColor.GREEN);
-    private static Component no = Component.text("死亡不掉落已关闭").color(NamedTextColor.RED);
+    private static final Component yes = Component.text("死亡不掉落已开启").color(NamedTextColor.GREEN);
+    private static final Component no = Component.text("死亡不掉落已关闭").color(NamedTextColor.RED);
 
     public static void registerCommand(Commands commands) {
         commands.register(

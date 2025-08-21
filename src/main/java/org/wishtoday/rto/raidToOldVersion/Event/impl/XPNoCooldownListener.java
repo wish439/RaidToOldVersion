@@ -10,6 +10,7 @@ public class XPNoCooldownListener implements Listener {
     @EventHandler
     public void onTickStart(ServerTickStartEvent e) {
         if (!Config.isXp_no_cooldown()) return;
+        //noinspection CodeBlock2Expr
         RaidToOldVersion.getInstance().getServer().getOnlinePlayers().forEach(player -> {
             player.setExpCooldown(0);
         });

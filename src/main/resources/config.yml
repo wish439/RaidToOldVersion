@@ -4,6 +4,8 @@ raidToOldVersion: true
 #开启经验吸收无冷却
 xp_no_cooldown: true
 
+#死亡不掉落可切换(当gamerule keepinventory为true时，必须关闭,否则将有bug)
+keep_inventory_toggle: false
 #快捷潜影盒配置
 quickshulker:
   #可以打开潜影盒

@@ -1,6 +1,8 @@
 package org.wishtoday.rto.raidToOldVersion.Network;
 
 
+@Deprecated
+@SuppressWarnings("all")
 public class CarpetHelloPacket {
     private static final String CHANNEL = "carpet:hello";
     //private static final ResourceLocation NAME = new ResourceLocation("carpet", "hello");

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Deprecated
+@SuppressWarnings("all")
 public class StructureRenderEvent extends BukkitRunnable implements Listener {
     public static final int CHUNK_SIZE = 16;
 
