@@ -37,7 +37,6 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
         //getServer().getPluginManager().registerEvents(this, this);
         //protocolManager.addPacketListener(new PlaceBlockPacket(this));
         //new StructureRenderEvent().runTaskTimer(this, 0L, 20L);
-
     }
 
     public static FoliaLib getFoliaLib() {
@@ -58,10 +57,6 @@ public final class RaidToOldVersion extends JavaPlugin implements Listener {
 
     public static RaidToOldVersion getInstance() {
         return instance;
-    }
-
-    public NamespacedKey getShulkerInvKey() {
-        return shulkerInvKey;
     }
 
     @Override
