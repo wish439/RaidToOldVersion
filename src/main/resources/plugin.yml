@@ -1,8 +1,6 @@
-name: RaidToOldVersion
+name: quickShulker
 version: "${version}"
 main: org.wishtoday.rto.raidToOldVersion.RaidToOldVersion
 api-version: '1.21'
-authors: [wishtoday,Tahoma34]
+authors: [wishtoday]
 folia-supported: true
-depend:
-  - ProtocolLib

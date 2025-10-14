@@ -9,7 +9,7 @@ import org.wishtoday.rto.raidToOldVersion.Config.Config;
 public class RTOCommand {
     public static void registerCommand(Commands commands) {
         commands.register(
-                Commands.literal("rto")
+                Commands.literal("qs")
                         .requires(source -> source.getSender().isOp())
                         .then(Commands.literal("reload").executes(RTOCommand::reloadConfig
                         )).build());

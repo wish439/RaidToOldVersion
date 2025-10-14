@@ -8,14 +8,6 @@ import org.wishtoday.rto.raidToOldVersion.RaidToOldVersion;
 public class RegisterEvent {
     public static void register(RaidToOldVersion plugin, NamespacedKey key) {
         PluginManager manager = plugin.getServer().getPluginManager();
-        manager.registerEvents(new AttackListener(), plugin);
         manager.registerEvents(new QuickListener(plugin,key), plugin);
-        manager.registerEvents(new RaidToOldListener(), plugin);
-        manager.registerEvents(new CustomKeepInventoryListener(), plugin);
-        manager.registerEvents(new XPNoCooldownListener(), plugin);
-        manager.registerEvents(new PlayerListener(), plugin);
-        //manager.registerEvents(new StructureRenderEvent(), plugin);
-        manager.registerEvents(new PlayerExpEvent(), plugin);
-        //manager.registerEvents(new ProHitEvent(), plugin);
     }
 }
